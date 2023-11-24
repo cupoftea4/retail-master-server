@@ -1,0 +1,24 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.8"
+services:
+  retail-api:
+    build:
+      context: "D:\\Code\\CSharp\\RetailMaster\\RetailMaster"
+      dockerfile: "Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net7.0/RetailMaster.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      NUGET_PACKAGES: "C:\\Users\\Hope\\.nuget\\packages"
+      NUGET_FALLBACK_PACKAGES: "C:\\Users\\Hope\\.nuget\\packages"
+    image: "retailmaster:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\Hope\\.nuget\\packages:/root/.nuget/fallbackpackages"
+    - "D:\\Code\\CSharp\\RetailMaster\\RetailMaster:/app:rw"
+    - "D:\\Code\\CSharp\\RetailMaster:/src:rw"
+    working_dir: "/app"

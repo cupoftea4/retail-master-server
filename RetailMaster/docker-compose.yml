@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  retail-api:
+    image: retailmaster  # Use your .NET Core application's Docker image
+    build:
+      context: .  # Your Dockerfile location
+      dockerfile: Dockerfile  # Your Dockerfile name
+    ports:
+      - "8060:80"  # Maps port 8060 on the host to port 80 in the container
+    depends_on:
+      - db  # Ensures that the db service is started first
+    environment:
+      - ConnectionStrings__DefaultConnection=server=db;port=3306;user=root;password=1234;database=retail_master;
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3307:3306"  # Maps port 3307 on the host to port 3306 in the container
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: retail_master
+    volumes:
+      - ./mysql-data:/var/lib/mysql  # Bind mount
