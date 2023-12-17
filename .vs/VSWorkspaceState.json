@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\RetailMaster",
+    "\\WpfClient",
+    "\\WpfClient\\UserControls",
+    "\\WpfClient\\Views"
+  ],
+  "SelectedNode": "\\WpfClient\\UserControls\\ProductDetailControl.xaml",
+  "PreviewInSolutionExplorer": false
+}

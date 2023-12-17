@@ -6,10 +6,6 @@ namespace RetailMaster.Models;
 
 public partial class RetailMasterContext : DbContext
 {
-    public RetailMasterContext()
-    {
-    }
-
     public RetailMasterContext(DbContextOptions<RetailMasterContext> options)
         : base(options)
     {
@@ -40,10 +36,16 @@ public partial class RetailMasterContext : DbContext
     private string hostConnectionString = "server=localhost;port=3307;database=retail_master;user=root;password=1234";
     
     private string dockerConnectionString = "server=db;port=3306;database=retail_master;user=root;password=1234";
-    
+    // private readonly string? _connectionString = _config["RetailMasterDB"];
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySql(hostConnectionString, ServerVersion.Parse("8.2.0-mysql"));
+    {
+        if (dockerConnectionString == null)
+        {
+            throw new InvalidOperationException("Database connection string 'RetailMasterDB' is not set.");
+        }
+        optionsBuilder.UseMySql(hostConnectionString, ServerVersion.Parse("8.2.0-mysql"));
+    }    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

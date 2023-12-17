@@ -1,0 +1,10 @@
+<UserControl x:Class="WpfClient.UserControls.ProductDetailControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Margin="20">
+        <TextBlock Text="{Binding ProductId, StringFormat='#{0}'}" FontWeight="Bold"/>
+        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+        <TextBlock Text="{Binding Category.Name, StringFormat='Product category: {0}', FallbackValue='Category: N/A'}"/>
+        <Image Source="{Binding PictureUrl}" Width="100" Height="100" Stretch="UniformToFill"/>
+    </StackPanel>
+</UserControl>

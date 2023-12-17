@@ -39,6 +39,16 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", 
+        builder => builder.WithOrigins("http://localhost:5173") // Replace with the client's URL
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
+});
+
+
 // Add services to the container.
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
@@ -90,6 +100,7 @@ builder.Services.AddScoped<InvoiceProductService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<ShopService>();
+builder.Services.AddScoped<ProductCategoryService>();
 
 var app = builder.Build();
 
@@ -101,6 +112,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowSpecificOrigin");
 // app.UseHttpsRedirection();
 
 app.UseAuthentication();

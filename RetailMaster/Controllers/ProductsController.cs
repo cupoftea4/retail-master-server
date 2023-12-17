@@ -1,6 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MySqlConnector;
 using RetailMaster.DTO;
 using RetailMaster.Models;
 using RetailMaster.Services;
@@ -19,6 +18,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet(Name = "Products")]
+    // [Authorize(Roles = "admin,worker,seller")]
     public async Task<IActionResult> Get()
     {
         var products = await _productService.GetAllProductsAsync();

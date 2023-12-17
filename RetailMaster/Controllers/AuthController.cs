@@ -1,21 +1,23 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RetailMaster.DTO;
 using RetailMaster.Models;
 using RetailMaster.Services;
+
+namespace RetailMaster.Controllers;
 
 [ApiController]
 [Route("auth")]
 public class AuthController : ControllerBase
 {
     private readonly AuthService _authService;
+    private readonly UserService _userService;
 
-    public AuthController(AuthService authService)
+    public AuthController(AuthService authService, UserService userService)
     {
         _authService = authService;
+        _userService = userService;
     }
-
-    [Authorize(Roles = "admin")]
+    
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterUserDto registerDto)
     {
@@ -44,7 +46,7 @@ public class AuthController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-
+    
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
     {
@@ -56,12 +58,24 @@ public class AuthController : ControllerBase
         try
         {
             var token = await _authService.Login(loginDto);
-            return Ok(new { Token = token });
+            if (token == null)
+            {
+                throw new Exception("Invalid login credentials");
+            }
+
+            // Assuming UserService is injected and available in AuthController
+            var userDto = await _userService.GetUserByEmail(loginDto.Email);
+            if (userDto == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            return Ok(new { Token = token, User = userDto });
         }
         catch (Exception ex)
         {
-            // You can return a more specific error message here
             return Unauthorized(ex.Message);
         }
     }
+
 }

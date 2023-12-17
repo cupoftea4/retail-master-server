@@ -11,7 +11,7 @@ services:
     depends_on:
       - db  # Ensures that the db service is started first
     environment:
-      - ConnectionStrings__DefaultConnection=server=db;port=3306;user=root;password=1234;database=retail_master;
+      - RetailMasterDB=server=db;port=3306;user=root;password=1234;database=retail_master;
 
   db:
     image: mysql

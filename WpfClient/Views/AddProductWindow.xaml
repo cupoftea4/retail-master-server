@@ -1,0 +1,30 @@
+<Window x:Class="WpfClient.Views.AddProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:global="clr-namespace:"
+        Title="Add Product" Height="300" Width="400">
+    <StackPanel Margin="10">
+        <TextBox x:Name="NameTextBox" Margin="0,10">
+            <b:Interaction.Behaviors>
+                <global:PlaceholderBehavior Placeholder="Enter name"/>
+            </b:Interaction.Behaviors>
+        </TextBox>
+        
+        <TextBox x:Name="BarcodeTextBox" Margin="0,10">
+            <b:Interaction.Behaviors>
+                <global:PlaceholderBehavior Placeholder="Enter barcode"/>
+            </b:Interaction.Behaviors>
+        </TextBox>
+        
+        <ComboBox ItemsSource="{Binding Categories}" 
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="CategoryId"
+                  SelectedValue="{Binding SelectedCategoryId}" />
+
+
+        <!-- Add other input fields as necessary -->
+
+        <Button Content="Add Product" Click="AddProductButton_Click" Margin="0,10"/>
+    </StackPanel>
+</Window>

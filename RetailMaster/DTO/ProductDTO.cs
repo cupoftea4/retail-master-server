@@ -11,7 +11,7 @@ public class CreateProductDto
 
 public class ProductDto
 {
-    public int Id { get; set; }
+    public int ProductId { get; set; }
     public required ProductCategory Category { get; set; }
     public string Name { get; set; } = null!;
     public string Barcode { get; set; } = null!;

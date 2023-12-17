@@ -21,6 +21,12 @@ public class UserService
         var user = await _context.Users.FindAsync(userId);
         return user != null ? _mapper.Map<UserDto>(user) : null;
     }
+    
+    public async Task<UserDto?> GetUserByEmail(string email)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        return user != null ? _mapper.Map<UserDto>(user) : null;
+    }
 
     public async Task<List<UserDto>> GetAllUsers()
     {
