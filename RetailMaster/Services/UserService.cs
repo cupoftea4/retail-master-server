@@ -1,3 +1,6 @@
+using System.Data;
+using MySqlConnector;
+
 namespace RetailMaster.Services;
 
 using AutoMapper;
@@ -46,4 +49,19 @@ public class UserService
         await _context.SaveChangesAsync();
         return true;
     }
+    
+    // call procedure with parameters and return a table with results
+    public DataTable CallProcedure(string procedureName, params MySqlParameter[] parameters) {
+        var command = _context.Database.GetDbConnection().CreateCommand();
+        command.CommandText = procedureName;
+        command.CommandType = CommandType.StoredProcedure;
+        command.Parameters.AddRange(parameters);
+        
+        var adapter = new MySqlDataAdapter((MySqlCommand)command);
+        var table = new DataTable();
+        adapter.Fill(table);
+
+        return table;
+    }
+
 }
